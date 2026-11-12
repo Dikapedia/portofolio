@@ -1,6 +1,9 @@
 <script setup>
 import { X, ExternalLink, Github, CheckCircle2, Calendar } from 'lucide-vue-next'
-import { watch, onUnmounted } from 'vue'
+import { ref, watch, onUnmounted, computed, nextTick } from 'vue'
+import { useI18n } from '../useI18n'
+
+const { t, tp } = useI18n()
 
 const props = defineProps({
   project: {
@@ -15,6 +18,10 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
+const content = computed(() => tp(props.project) || {})
+
+const dialogEl = ref(null)
+
 const getProjectImage = (imgName) => {
   if (!imgName) return ''
   const path = imgName.includes('.') ? imgName : `${imgName}.svg`
@@ -22,21 +29,52 @@ const getProjectImage = (imgName) => {
 }
 
 const handleKeydown = (event) => {
-  if (event.key === 'Escape' && props.isOpen) emit('close')
+  if (!props.isOpen) return
+
+  if (event.key === 'Escape') {
+    emit('close')
+    return
+  }
+
+  if (event.key !== 'Tab' || !dialogEl.value) return
+
+  const items = [...dialogEl.value.querySelectorAll('a[href], button:not([disabled])')]
+  if (!items.length) return
+
+  const first = items[0]
+  const last = items[items.length - 1]
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
 }
 
 let previousOverflow = ''
+let lastFocused = null
 
 watch(
   () => props.isOpen,
   (open) => {
     if (open) {
+      lastFocused = document.activeElement
       previousOverflow = document.body.style.overflow
       document.body.style.overflow = 'hidden'
       document.addEventListener('keydown', handleKeydown)
+      nextTick(() => {
+        dialogEl.value?.querySelector('button')?.focus()
+      })
     } else {
       document.removeEventListener('keydown', handleKeydown)
       document.body.style.overflow = previousOverflow
+      const target = lastFocused
+      lastFocused = null
+      nextTick(() => {
+        if (target && document.contains(target)) target.focus()
+      })
     }
   }
 )
@@ -63,17 +101,18 @@ onUnmounted(() => {
         @click.self="emit('close')"
       >
         <div
+          ref="dialogEl"
           class="relative w-full max-w-3xl rounded-3xl bg-dark-950 border border-slate-700/80 shadow-2xl overflow-hidden my-8"
           role="dialog"
           aria-modal="true"
-          :aria-label="project.title"
+          :aria-label="content.title"
         >
           <!-- Close Button -->
           <button
             type="button"
             @click="emit('close')"
             class="absolute top-4 right-4 z-20 p-2 rounded-full bg-dark-950/80 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-dark-900 transition-all focus:outline-none"
-            aria-label="Tutup Modal"
+            :aria-label="t('modal.closeModal')"
           >
             <X class="w-5 h-5" />
           </button>
@@ -82,7 +121,7 @@ onUnmounted(() => {
           <div v-if="project.image" class="relative aspect-video w-full bg-slate-950 overflow-hidden border-b border-slate-800">
             <img
               :src="getProjectImage(project.image)"
-              :alt="project.title"
+              :alt="content.title"
               class="w-full h-full object-cover object-center"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent"></div>
@@ -100,26 +139,26 @@ onUnmounted(() => {
           <div class="p-6 sm:p-8 space-y-6">
             <div class="pr-14">
               <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
-                {{ project.title }}
+                {{ content.title }}
               </h3>
               <p class="text-brand-cyan text-sm sm:text-base font-medium mt-1">
-                {{ project.subtitle }}
+                {{ content.subtitle }}
               </p>
             </div>
 
             <!-- Full Description -->
             <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-              {{ project.fullDescription }}
+              {{ content.fullDescription }}
             </p>
 
             <!-- Key Features -->
             <div class="space-y-3">
               <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">
-                Fitur Utama &amp; Arsitektur:
+                {{ t('modal.mainFeatures') }}
               </h4>
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <li
-                  v-for="(feature, idx) in project.features"
+                  v-for="(feature, idx) in content.features"
                   :key="idx"
                   class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300 bg-slate-950/60 p-3 rounded-xl border border-slate-800"
                 >
@@ -132,11 +171,11 @@ onUnmounted(() => {
             <!-- Tech Tags -->
             <div class="space-y-2">
               <h4 class="text-sm font-bold uppercase tracking-wider text-slate-400">
-                Teknologi yang Digunakan:
+                {{ t('modal.technologies') }}:
               </h4>
               <div class="flex flex-wrap gap-2">
                 <span
-                  v-for="tag in project.tags"
+                  v-for="tag in content.tags"
                   :key="tag"
                   class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-800/80 text-slate-200 border border-slate-700"
                 >
@@ -156,7 +195,7 @@ onUnmounted(() => {
                   class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition-colors"
                 >
                   <Github class="w-4 h-4" />
-                  <span>Source Code</span>
+                  <span>{{ t('modal.sourceCode') }}</span>
                 </a>
                 <a
                   v-if="project.liveUrl"
@@ -165,7 +204,7 @@ onUnmounted(() => {
                   rel="noopener noreferrer"
                   class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-gradient-to-r from-brand-blue to-brand-cyan hover:from-blue-600 hover:to-sky-400 text-white shadow-glow-cyan transition-all"
                 >
-                  <span>Live Preview</span>
+                  <span>{{ t('modal.livePreview') }}</span>
                   <ExternalLink class="w-4 h-4" />
                 </a>
               </div>
@@ -175,7 +214,7 @@ onUnmounted(() => {
                 @click="emit('close')"
                 class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-400 hover:text-white transition-colors"
               >
-                Tutup
+                {{ t('modal.close') }}
               </button>
             </div>
           </div>

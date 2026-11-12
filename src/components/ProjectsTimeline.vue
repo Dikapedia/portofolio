@@ -4,6 +4,9 @@ import { projects } from '../data/portfolioData'
 import ProjectCard from './ProjectCard.vue'
 import ProjectModal from './ProjectModal.vue'
 import { FolderGit2 } from 'lucide-vue-next'
+import { useI18n } from '../useI18n'
+
+const { t, tp } = useI18n()
 
 const selectedProject = ref(null)
 const isModalOpen = ref(false)
@@ -20,7 +23,7 @@ const closeModal = () => {
 </script>
 
 <template>
-  <section id="proyek" class="py-24 relative overflow-hidden bg-dark-950">
+  <section id="projects" class="py-24 relative overflow-hidden bg-dark-950">
     <!-- Ambient Blur -->
     <div class="absolute top-1/3 right-0 w-96 h-96 bg-brand-cyan/5 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-10 left-10 w-80 h-80 bg-brand-blue/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -30,13 +33,13 @@ const closeModal = () => {
       <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/10 border border-brand-cyan/20 text-xs font-semibold text-brand-cyan tracking-wider uppercase">
           <FolderGit2 class="w-3.5 h-3.5" />
-          <span>Showcase Proyek</span>
+          <span>{{ t('timeline.showcase') }}</span>
         </div>
         <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
           PROJE<span class="text-brand-cyan">CTS</span>
         </h2>
         <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
-          Koleksi proyek terpilih yang pernah saya kerjakan, mulai dari website dokumentasi KKL, aplikasi blur kamera, hingga aplikasi e-commerce sekolah berbasis Next.js.
+          {{ t('timeline.intro') }}
         </p>
 
       </div>
@@ -71,13 +74,13 @@ const closeModal = () => {
                 <div class="lg:col-span-5 text-right pr-6 space-y-2">
 
                   <h3 class="text-2xl font-bold text-white tracking-tight">
-                    {{ project.title }}
+                    {{ tp(project).title }}
                   </h3>
                   <p class="text-sm text-slate-400">
-                    {{ project.subtitle }}
+                    {{ tp(project).subtitle }}
                   </p>
                   <p class="text-xs text-slate-500 font-mono">
-                    Tahun Pengerjaan: {{ project.year }}
+                    {{ t('timeline.year') }}: {{ project.year }}
                   </p>
                 </div>
 
@@ -104,13 +107,13 @@ const closeModal = () => {
                 <div class="lg:col-span-5 pl-6 text-left space-y-2">
 
                   <h3 class="text-2xl font-bold text-white tracking-tight">
-                    {{ project.title }}
+                    {{ tp(project).title }}
                   </h3>
                   <p class="text-sm text-slate-400">
-                    {{ project.subtitle }}
+                    {{ tp(project).subtitle }}
                   </p>
                   <p class="text-xs text-slate-500 font-mono">
-                    Tahun Pengerjaan: {{ project.year }}
+                    {{ t('timeline.year') }}: {{ project.year }}
                   </p>
                 </div>
               </template>
@@ -128,7 +131,7 @@ const closeModal = () => {
               <!-- Indicator Header Mobile -->
               <div class="mb-3 space-y-1">
                 <p class="text-xs text-slate-400">
-                  {{ project.subtitle }}
+                  {{ tp(project).subtitle }}
                 </p>
               </div>
 

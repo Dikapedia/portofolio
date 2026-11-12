@@ -1,22 +1,27 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { Menu, X, Box } from 'lucide-vue-next'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { Menu, X } from 'lucide-vue-next'
+import { useI18n } from '../useI18n'
 
-const navLinks = [
-  { name: 'Home', href: '#beranda' },
-  { name: 'About', href: '#tentang' },
-  { name: 'Project', href: '#proyek' },
-  { name: 'Contact', href: '#kontak' },
-]
+const { lang, t, setLang } = useI18n()
+
+const navLinks = computed(() => [
+  { name: t('nav.home'), href: '#home' },
+  { name: t('nav.about'), href: '#about' },
+  { name: t('nav.projects'), href: '#projects' },
+  { name: t('nav.contact'), href: '#contact' },
+])
+
+const toggleLang = () => setLang(lang.value === 'en' ? 'id' : 'en')
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
-const activeSection = ref('beranda')
+const activeSection = ref('home')
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 20
 
-  const sections = ['beranda', 'tentang', 'proyek', 'kontak']
+  const sections = ['home', 'about', 'projects', 'contact']
   for (const section of sections) {
     const el = document.getElementById(section)
     if (el) {
@@ -57,10 +62,7 @@ onUnmounted(() => {
     <div class="max-w-6xl mx-auto px-6 lg:px-8">
       <div class="flex items-center justify-between">
         <!-- Brand -->
-        <a href="#beranda" class="flex items-center gap-3 text-slate-100 group">
-          <span class="w-9 h-9 rounded-xl bg-[#0c1424] border border-slate-700/80 flex items-center justify-center text-slate-200 group-hover:border-slate-500 transition-colors">
-            <Box class="w-5 h-5" />
-          </span>
+        <a href="#home" class="flex items-center text-slate-100 group">
           <span class="font-bold text-base tracking-[0.15em]">DIKA</span>
         </a>
 
@@ -85,14 +87,23 @@ onUnmounted(() => {
           </a>
         </nav>
 
-        <!-- Download CV -->
-        <div class="hidden md:flex items-center">
+        <!-- Language Toggle + Download CV -->
+        <div class="hidden md:flex items-center gap-2">
+          <button
+            type="button"
+            @click="toggleLang"
+            :aria-label="lang === 'en' ? 'Switch to Indonesian' : 'Switch to English'"
+            class="w-9 h-9 rounded-md text-xs font-semibold tracking-wide text-slate-300 bg-[#0c1424]/70 border border-slate-700/80 hover:border-slate-500 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          >
+            {{ lang === 'en' ? 'ID' : 'EN' }}
+          </button>
           <a
             href="/cv.pdf"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             class="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-slate-100 bg-[#0c1424]/70 border border-slate-700/80 hover:border-slate-500 hover:bg-slate-800/70 transition-colors duration-200"
           >
-            Download CV
+            {{ t('nav.viewCV') }}
           </a>
         </div>
 
@@ -100,6 +111,8 @@ onUnmounted(() => {
         <button
           type="button"
           @click="toggleMobileMenu"
+          :aria-expanded="isMobileMenuOpen"
+          aria-controls="mobile-menu"
           aria-label="Toggle Menu"
           class="md:hidden p-2 rounded-xl bg-[#0c1424]/80 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-colors focus:outline-none"
         >
@@ -120,6 +133,7 @@ onUnmounted(() => {
     >
       <div
         v-if="isMobileMenuOpen"
+        id="mobile-menu"
         class="md:hidden bg-[#060b14]/95 backdrop-blur-xl border-b border-slate-800 px-6 pt-4 pb-6 space-y-2 mt-3 shadow-2xl"
       >
         <a
@@ -136,14 +150,23 @@ onUnmounted(() => {
         >
           {{ link.name }}
         </a>
-        <div class="pt-3">
+        <div class="pt-3 flex items-center gap-2">
+          <button
+            type="button"
+            @click="toggleLang(); closeMobileMenu()"
+            :aria-label="lang === 'en' ? 'Switch to Indonesian' : 'Switch to English'"
+            class="w-12 h-12 shrink-0 rounded-md text-sm font-semibold text-slate-300 border border-slate-700/80 bg-[#0c1424]/70 hover:text-white transition-colors"
+          >
+            {{ lang === 'en' ? 'ID' : 'EN' }}
+          </button>
           <a
             href="/cv.pdf"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             @click="closeMobileMenu"
-            class="flex items-center justify-center w-full py-3 rounded-full font-medium text-slate-100 border border-slate-700/80 bg-[#0c1424]/70 hover:bg-slate-800/70 transition-colors"
+            class="flex-1 flex items-center justify-center py-3 rounded-full font-medium text-slate-100 border border-slate-700/80 bg-[#0c1424]/70 hover:bg-slate-800/70 transition-colors"
           >
-            Download CV
+            {{ t('nav.viewCV') }}
           </a>
         </div>
       </div>

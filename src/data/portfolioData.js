@@ -3,9 +3,9 @@ export const personalInfo = {
   location: "Semarang, Indonesia",
   timezone: "Worldwide UTC+7",
   stats: [
-    { value: "2+", label: "Years Coding" },
-    { value: "5+", label: "Projects Shipped" },
-    { value: "100%", label: "UI/UX Craft" }
+    { value: "2+" },
+    { value: "5+" },
+    { value: "100%" }
   ],
   contacts: {
     email: "hardikapangestu371@gmail.com",
@@ -15,19 +15,21 @@ export const personalInfo = {
   }
 }
 
+// Catatan: teks judul/subtitle/deskripsi/tag/fitur di bawah ini hanya fallback.
+// Yang tampil di UI diambil dari projectTranslations di src/i18n.js.
 export const projects = [
   {
     id: "web-kkl",
-    title: "Web KKL - Jelajah Wawasan & Pulau Dewata",
-    subtitle: "Dokumentasi Kuliah Kerja Lapangan Informatika",
-    description: "Website dokumentasi kegiatan Kuliah Kerja Lapangan (KKL) mahasiswa Informatika Universitas PGRI Semarang di Bali.",
-    fullDescription: "Platform dokumentasi KKL yang menampilkan destinasi ikonik, perjalanan edukatif, industri & balai diktat, serta wisata dan budaya. Website interaktif dengan navigasi mulus dan konten multimedia yang komprehensif.",
-    tags: ["Landing Page", "Dokumentasi", "UI/UX", "Responsive"],
+    title: "Web KKL - Explore Insights & Bali Island",
+    subtitle: "KKL Documentation Informatics",
+    description: "Website documentation for Kuliah Kerja Lapangan (KKL) activities by Informatics students at Universitas PGRI Semarang in Bali.",
+    fullDescription: "KKL documentation platform showcasing iconic destinations, educational journeys, industries & teaching halls, as well as tourism and culture. Interactive website with smooth navigation and comprehensive multimedia content.",
+    tags: ["Landing Page", "Documentation", "UI/UX", "Responsive"],
     features: [
-      "Halaman beranda dengan hero section menarik",
-      "Navigasi tab: Beranda, Jadwal, Eksplorasi",
-      "Galeri destinasi dengan informasi detail",
-      "Responsive design untuk semua perangkat"
+      "Landing page with attractive hero section",
+      "Navigation tabs: Home, Schedule, Explore",
+      "Destination gallery with detailed information",
+      "Responsive design for all devices"
     ],
     liveUrl: "https://kkl-kelompok10-2026.vercel.app/",
     githubUrl: null,
@@ -37,15 +39,15 @@ export const projects = [
   {
     id: "cam-blur",
     title: "Current Trend - Cam Blur",
-    subtitle: "Aplikasi blur kamera & foto pribadi, cepat dan aman",
-    description: "Aplikasi kecil untuk mengeblur foto & video dengan cepat, pribadi, dan aman.",
-    fullDescription: "Aplikasi Cam Blur dirancang untuk membantu pengguna menjaga privasi foto & video dengan blur latar atau objek tertentu. Simpan hasil, kembangkan kembali, atau bagikan tanpa risiko paparan data pribadi.",
-    tags: ["Flutter", "Camera", "Dart", "UI"],
+    subtitle: "Camera & private photo blur app, fast and safe",
+    description: "Small app to blur photos & videos quickly, privately, and safely.",
+    fullDescription: "Cam Blur app designed to help users protect photo & video privacy with background or specific object blur. Save results, further develop, or share without risk of personal data exposure.",
+    tags: ["Camera", "Python"],
     features: [
-      "Blur latar atau objek dalam kamera secara real-time",
-      "Simpan gambar hasil blur ke galeri",
-      "Antarmuka minimalis & responsif",
-      "Akses cepat tanpa koneksi require"
+      "Blur background or objects in camera in real-time",
+      "Save blur result images to gallery",
+      "Minimalist & responsive interface",
+      "Quick access without internet required"
     ],
     liveUrl: "",
     githubUrl: "https://github.com/Dikapedia/cam-blur",
@@ -55,15 +57,15 @@ export const projects = [
   {
     id: "schooly-shop",
     title: "Schooly Shop - E-Commerce Sekolah",
-    subtitle: "Toko daring internal sekolah",
-    description: "Aplikasi e-commerce untuk toko internal sekolah, mencakup katalog produk, keranjang, checkout, dan riwayat pesanan.",
-    fullDescription: "Schooly Shop adalah aplikasi toko daring internal sekolah untuk menjual produk kreatif warga sekolah seperti seragam, alat tulis, kerajinan, dan karya siswa. Proyek ini berfokus pada sisi frontend: seluruh data produk, pesanan, dan pembayaran menggunakan adapter mock, sedangkan sesi login dan keranjang disimpan di browser.",
+    subtitle: "Internal school online store",
+    description: "E-commerce app for internal school store, includes product catalog, cart, checkout, and order history.",
+    fullDescription: "Schooly Shop is an internal school online store app for selling creative products from school members such as uniforms, stationery, crafts, and student works. This project focuses on the frontend side: all product, order, and payment data use mock adapter, while login sessions and cart are stored in the browser.",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Zod"],
     features: [
-      "Katalog produk dengan filter kategori dan pencarian",
-      "Detail produk, varian, serta keranjang yang persisten via localStorage",
-      "Alur checkout, pembayaran Virtual Account (mock), dan riwayat pesanan",
-      "Autentikasi dummy dengan redirect role dan panel admin (mock)"
+      "Product catalog with category filter and search",
+      "Product details, variants, and cart persistent via localStorage",
+      "Checkout flow, Virtual Account (mock) payment, and order history",
+      "Dummy authentication with role redirect and admin panel (mock)"
     ],
     liveUrl: "",
     githubUrl: "https://github.com/Dikapedia/schoolyshop",

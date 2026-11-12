@@ -1,15 +1,16 @@
 <script setup>
 import { personalInfo } from '../data/portfolioData'
 import profileImg from '../assets/profile.jpg'
+import { useI18n } from '../useI18n'
+
+const { t } = useI18n()
 
 const techBadges = ['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Vue']
-
-const heroBio = 'Crafting high-precision, visually striking web experiences. Merging clean aesthetic engineering with fluid interactive design to produce best-in-class websites.'
 </script>
 
 <template>
   <section
-    id="beranda"
+    id="home"
     class="relative min-h-screen pt-24 pb-14 md:pt-28 md:pb-16 flex items-center overflow-hidden"
   >
     <!-- Ambient Background Glow -->
@@ -20,7 +21,7 @@ const heroBio = 'Crafting high-precision, visually striking web experiences. Mer
         <!-- Left Content -->
         <div class="space-y-6 text-center lg:text-left">
           <p class="text-xs sm:text-sm font-medium tracking-[0.25em] uppercase text-slate-400">
-            Hello, I'm
+            {{ t('hero.hello') }}
           </p>
 
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight">
@@ -30,32 +31,28 @@ const heroBio = 'Crafting high-precision, visually striking web experiences. Mer
             </span>
           </h1>
 
-          <p class="text-xl sm:text-2xl font-bold uppercase tracking-wide bg-gradient-to-r from-[#bcd0ec] to-[#8fb4ea] bg-clip-text text-transparent">
-            Frontend Developer
-          </p>
-
           <p class="text-base sm:text-[17px] text-slate-400 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-            {{ heroBio }}
+            {{ t('hero.bio') }}
           </p>
 
           <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
             <a
-              href="#proyek"
+              href="#projects"
               class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-900 bg-[#a9c4f5] hover:bg-[#bcd2f8] transition-colors duration-200"
             >
-              Explore Projects
+              {{ t('hero.explore') }}
             </a>
             <a
-              href="#kontak"
+              href="#contact"
               class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-100 bg-[#0b1120]/70 border border-slate-700 hover:border-slate-500 hover:bg-slate-900 transition-colors duration-200"
             >
-              Contact Me
+              {{ t('hero.contactMe') }}
             </a>
           </div>
 
           <div class="pt-6 border-t border-slate-800/80">
             <p class="text-[11px] font-medium tracking-[0.2em] uppercase text-slate-500 mb-3">
-              Core Technologies
+              {{ t('hero.coreTech') }}
             </p>
             <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
               <span

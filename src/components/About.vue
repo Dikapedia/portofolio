@@ -1,6 +1,11 @@
 ﻿<script setup>
 import { personalInfo } from '../data/portfolioData'
 import { CircleDot } from 'lucide-vue-next'
+import { useI18n } from '../useI18n'
+
+const { t } = useI18n()
+
+const statKeys = ['about.years', 'about.projectsShipped', 'about.uxCraft']
 
 const aboutTech = [
   {
@@ -37,7 +42,7 @@ const aboutTech = [
 </script>
 
 <template>
-  <section id="tentang" class="relative py-24 md:py-28 overflow-hidden bg-dark-950">
+  <section id="about" class="relative py-24 md:py-28 overflow-hidden bg-dark-950">
     <!-- Ambient Backdrop Light -->
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(37,99,235,0.08),_transparent_65%)] pointer-events-none"></div>
 
@@ -47,15 +52,15 @@ const aboutTech = [
         <div class="flex flex-col lg:pr-4">
           <div class="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.25em] text-slate-200">
             <CircleDot class="w-3.5 h-3.5" />
-            <span>About Me</span>
+            <span>{{ t('about.aboutMe') }}</span>
           </div>
 
           <p class="mt-8 max-w-[540px] text-[15px] leading-relaxed text-slate-100">
-            Halo, saya Hardika. Developer yang suka mengubah tenangnya malam jadi baris-baris kode yang fungsional. Selalu tertarik bikin proyek-proyek random, dan saat ini lagi fokus mendalami full-stack web development.
+            {{ t('about.bio') }}
           </p>
 
           <p class="mt-8 text-[15px] text-slate-200">
-            Crafting Digital Experiences with Code &amp; Creativity
+            {{ t('about.subtitle') }}
           </p>
 
           <div class="mt-5 flex flex-wrap gap-2 max-w-[500px]">
@@ -72,10 +77,10 @@ const aboutTech = [
           </div>
 
           <div class="mt-8 grid grid-cols-3 gap-6 max-w-[500px]">
-            <div v-for="stat in personalInfo.stats" :key="stat.label">
+            <div v-for="(stat, index) in personalInfo.stats" :key="index">
               <p class="text-lg font-bold text-white">{{ stat.value }}</p>
               <p class="mt-1 text-[11px] sm:text-xs font-medium uppercase tracking-[0.15em] text-slate-300 leading-snug">
-                {{ stat.label }}
+                {{ t(statKeys[index]) }}
               </p>
             </div>
           </div>
