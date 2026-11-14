@@ -50,7 +50,12 @@
     background-color: #a9c4f5;
     border-radius: 50% 50% 0 0 / 28px 28px 0 0;
   }
-  .fill-up:hover::before {
+  @media (hover: hover) {
+    .fill-up:hover::before {
+      transform: translateY(-100%);
+    }
+  }
+  .fill-up:active::before {
     transform: translateY(-100%);
   }
 

@@ -44,7 +44,7 @@ const techBadges = ['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Vue']
             </a>
             <a
               href="#contact"
-              class="fill-btn fill-up inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-100 bg-[#0b1120]/70 border border-slate-700 transition-colors duration-300 hover:text-slate-900 hover:border-[#a9c4f5] press-glow"
+              class="fill-btn fill-up inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-100 bg-[#0b1120]/70 border border-slate-700 transition-colors duration-300 [@media(hover:hover)]:hover:text-slate-900 [@media(hover:hover)]:hover:border-[#a9c4f5] active:text-slate-900 active:border-[#a9c4f5] press-glow"
             >
               <span class="relative z-10">{{ t('hero.contactMe') }}</span>
             </a>
@@ -73,7 +73,8 @@ const techBadges = ['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Vue']
             <img
               :src="profileImg"
               :alt="personalInfo.name"
-              class="w-full aspect-[5/6] object-cover object-center grayscale transition-[filter] duration-500 ease-out [@media(hover:hover)]:hover:grayscale-0 active:grayscale-0"
+              tabindex="0"
+              class="w-full aspect-[5/6] object-cover object-center grayscale transition-[filter] duration-500 ease-out focus:outline-none [@media(hover:hover)]:hover:grayscale-0 active:grayscale-0"
               loading="eager"
             />
           </div>
