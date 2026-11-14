@@ -1,6 +1,6 @@
 <script setup>
 import { personalInfo } from '../data/portfolioData'
-import profileImg from '../assets/profile.jpg'
+import profileImg from '../assets/profile.webp'
 import { useI18n } from '../useI18n'
 
 const { t } = useI18n()
@@ -35,18 +35,18 @@ const techBadges = ['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Vue']
             {{ t('hero.bio') }}
           </p>
 
-          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+          <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
             <a
               href="#projects"
-              class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-900 bg-[#a9c4f5] hover:bg-[#bcd2f8] transition-colors duration-200"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-900 bg-[#a9c4f5] border border-slate-700 press-glow"
             >
-              {{ t('hero.explore') }}
+              <span class="relative z-10">{{ t('hero.explore') }}</span>
             </a>
             <a
               href="#contact"
-              class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-100 bg-[#0b1120]/70 border border-slate-700 hover:border-slate-500 hover:bg-slate-900 transition-colors duration-200"
+              class="fill-btn fill-up inline-flex items-center justify-center px-6 py-3 rounded-lg text-sm font-semibold text-slate-100 bg-[#0b1120]/70 border border-slate-700 transition-colors duration-300 hover:text-slate-900 hover:border-[#a9c4f5] press-glow"
             >
-              {{ t('hero.contactMe') }}
+              <span class="relative z-10">{{ t('hero.contactMe') }}</span>
             </a>
           </div>
 
@@ -73,7 +73,7 @@ const techBadges = ['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Vue']
             <img
               :src="profileImg"
               :alt="personalInfo.name"
-              class="w-full aspect-[5/6] object-cover object-center"
+              class="w-full aspect-[5/6] object-cover object-center grayscale transition-[filter] duration-500 ease-out [@media(hover:hover)]:hover:grayscale-0 active:grayscale-0"
               loading="eager"
             />
           </div>

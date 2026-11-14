@@ -107,9 +107,12 @@ const copyEmail = async () => {
               :aria-label="social.name"
               :target="social.name === 'Email' ? undefined : '_blank'"
               :rel="social.name === 'Email' ? undefined : 'noopener noreferrer'"
-              class="flex h-11 w-11 items-center justify-center rounded-full border border-slate-700/60 bg-[#0b1220]/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800/80 hover:text-white transition-all duration-200"
+              class="group inline-flex h-11 min-w-11 px-[13px] items-center justify-center rounded-full border border-slate-700/60 bg-[#0b1220]/60 text-slate-200 hover:border-slate-500 hover:bg-slate-800/80 hover:text-white transition-colors duration-300"
             >
-              <component :is="social.icon" class="w-[18px] h-[18px]" />
+              <component :is="social.icon" class="w-[18px] h-[18px] shrink-0" />
+              <span
+                class="max-w-0 overflow-hidden whitespace-nowrap text-xs font-semibold opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-28 group-hover:opacity-100"
+              >{{ social.name }}</span>
             </a>
           </div>
         </div>

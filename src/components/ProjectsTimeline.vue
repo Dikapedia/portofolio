@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { projects } from '../data/portfolioData'
 import ProjectCard from './ProjectCard.vue'
 import ProjectModal from './ProjectModal.vue'
@@ -20,6 +20,39 @@ const closeModal = () => {
   isModalOpen.value = false
   selectedProject.value = null
 }
+
+const revealRoot = ref(null)
+let observer = null
+
+onMounted(() => {
+  const els = revealRoot.value?.querySelectorAll('[data-reveal]')
+  if (!els?.length) return
+
+  if (
+    !('IntersectionObserver' in window) ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return
+  }
+
+  // Hide only once JS is running, so a failed mount never leaves content invisible.
+  els.forEach((el) => el.classList.add('reveal'))
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-revealed')
+        observer.unobserve(entry.target)
+      })
+    },
+    { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
+  )
+
+  els.forEach((el) => observer.observe(el))
+})
+
+onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
@@ -53,10 +86,12 @@ const closeModal = () => {
         <div class="lg:hidden absolute left-4 sm:left-6 top-4 bottom-12 w-0.5 bg-gradient-to-b from-brand-cyan via-brand-blue/50 to-slate-800 pointer-events-none"></div>
 
         <!-- Timeline Items List -->
-        <div class="space-y-16 lg:space-y-24">
+        <div ref="revealRoot" class="space-y-16 lg:space-y-24">
           <div
             v-for="(project, index) in projects"
             :key="project.id"
+            data-reveal
+            :style="{ transitionDelay: `${index * 80}ms` }"
             class="relative"
           >
             <!-- ================= DESKTOP ALTERNATING LAYOUT (lg:grid) ================= -->
